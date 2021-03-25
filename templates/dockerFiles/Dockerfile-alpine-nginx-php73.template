@@ -33,11 +33,15 @@ RUN apk add --update --no-cache $PACKAGES && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
     npm install -y && npm run build && \
     # Create directories
-    mkdir -p /var/www/files /run/nginx  /run/supervisord/ /etc/ssl/nginx && \
+    mkdir -p /var/www/files /run/nginx /etc/ssl/nginx && \
     cp config.TEMPLATE.inc.php config.inc.php && \
     chown -R nginx:nginx /var/www/* && \
+    # Config supervisorctl
+    && mkdir -p /etc/supervisor.d/ \
+    && sed -i '/nodaemon/c\nodaemon=true' /etc/supervisord.conf \
+    && sed -i '/user/c\user=root' /etc/supervisord.conf \     
     # Prepare freefont for captcha 
-	&& ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
+	  && ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
     # Prepare crontab
     echo "0 * * * *   ojs-run-scheduled" | crontab - && \
     # Clear the image

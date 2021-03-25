@@ -106,13 +106,17 @@ RUN set -xe \
 	# Node joins to the party:
 	&& npm install -y && npm run build \
 # Create directories
- 	&& mkdir -p /var/www/files /run/apache2  /run/supervisord/ \
+ 	&& mkdir -p /var/www/files /run/apache2 \
 	&& cp config.TEMPLATE.inc.php config.inc.php \
 	&& chown -R apache:apache /var/www/* \
 # Prepare freefont for captcha 
 	&& ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
 # Prepare crontab
 	&& echo "0 * * * *   ojs-run-scheduled" | crontab - \
+# Config supervisorctl
+  && mkdir -p /etc/supervisor.d/ \
+  && sed -i '/nodaemon/c\nodaemon=true' /etc/supervisord.conf \
+	&& sed -i '/user/c\user=root' /etc/supervisord.conf \  
 # Prepare httpd.conf
 	&& sed -i -e '\#<Directory />#,\#</Directory>#d' /etc/apache2/httpd.conf \
 	&& sed -i -e "s/^ServerSignature.*/ServerSignature Off/" /etc/apache2/httpd.conf \

@@ -106,7 +106,7 @@ RUN set -xe \
 	# Node joins to the party:
 	&& npm install -y && npm run build \
 # Create directories
- 	&& mkdir -p /var/www/files /run/apache2  /run/supervisord/ \
+ 	&& mkdir -p /var/www/files /run/apache2  /etc/supervisor.d/ \
 	&& cp config.TEMPLATE.inc.php config.inc.php \
 	&& chown -R apache:apache /var/www/* \
 # Prepare freefont for captcha 
@@ -122,6 +122,10 @@ RUN set -xe \
 	&& apk del --no-cache .build-deps \
 	&& rm -rf /tmp/* \
 	&& rm -rf /root/.cache/* \
+# Config supervisorctl
+  && mkdir -p /etc/supervisor.d/ \
+  && sed -i '/nodaemon/c\nodaemon=true' /etc/supervisord.conf \
+	&& sed -i '/user/c\user=root' /etc/supervisord.conf \  
 # Some folders are not required (as .git .travis.yml test .gitignore .gitmodules ...)
 	&& find . -name ".git" -exec rm -Rf '{}' \; \
 	&& find . -name ".travis.yml" -exec rm -Rf '{}' \; \
