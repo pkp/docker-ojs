@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.13.6
 
 LABEL maintainer="Public Knowledge Project <marc.bria@gmail.com>"
 WORKDIR /var/www/html
@@ -17,7 +17,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
     PACKAGES="supervisor dcron ttf-freefont apache2 apache2-ssl apache2-utils patch php7 php7-fpm php7-cli php7-apache2   \
              php7-zlib php7-json php7-mbstring php7-tokenizer php7-simplexml php7-phar php7-openssl    \
              php7-curl php7-mcrypt php7-pdo_mysql php7-mysqli php7-session php7-ctype php7-gd php7-xml \
-             php7-dom php7-iconv curl nodejs git" \
+             php7-dom php7-iconv curl nodejs git npm" \
     EXCLUDE_URL="https://raw.githubusercontent.com/pkp/docker-ojs/master/excludeVar.list"
 
 RUN apk add --update --no-cache $PACKAGES && \
@@ -32,14 +32,14 @@ RUN apk add --update --no-cache $PACKAGES && \
 RUN composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
-    npm install -y && npm run build
+    npm install && npm run build
 
 # Create directories
 RUN mkdir -p /var/www/files /run/apache2  /run/supervisord/ && \
     cp config.TEMPLATE.inc.php config.inc.php && \
     chown -R apache:apache /var/www/* && \
     # Prepare freefont for captcha 
-	&& ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
+	ln -s /usr/share/fonts/TTF/FreeSerif.ttf /usr/share/fonts/FreeSerif.ttf \
     # Prepare crontab
     echo "0 * * * *   ojs-run-scheduled" | crontab - && \
     # Prepare httpd.conf
