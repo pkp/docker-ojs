@@ -39,7 +39,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
 After this, notice that for all available versions, we provide a **docker-compose** configuration file so
 you will be able to start a full OJS stack (web app + database containers) in 4 easy steps:
 
-1. Clone this repository in your machine (if youprefer, you can also [download](https://github.com/pkp/docker-ojs/archive/master.zip) and unzip it):
+1. Clone this repository in your machine (if you prefer, you can also [download](https://github.com/pkp/docker-ojs/archive/master.zip) and unzip it):
 
     ```bash
     $ git clone https://github.com/pkp/docker-ojs.git
@@ -191,13 +191,13 @@ To be sure your volumes have the right permissions, you can run those commands:
    ```
 
 In other words... all the content inside volumes will be owned by apache2 user
-and group (uid 100 and gid 101 inside the container), execpt for db and logs/db
+and group (uid 100 and gid 101 inside the container), except for db and logs/db
 folders that will be owned by mysql user and group (uid and gid 999).
 
 
 ## Built in scripts
 
-The Dockerfile includes some scritps at "/usr/local/bin" to facilitate common opperations:
+The Dockerfile includes some scripts at "/usr/local/bin" to facilitate common operations:
 
 | Script               | Container  | Description                                                                                                   |
 |:---------------------|:----------:|:--------------------------------------------------------------------------------------------------------------|
@@ -299,7 +299,7 @@ By default at the start of Apache one script will check if the SSL certificate
 is valid and its CN matches your SERVERNAME, if don't it will generate a new one.
 The certificate can be overwritten using a volume mount (see `docker-compose.yml` file).
 
-_**Note:** This feature is under reveiw and could change in future._
+_**Note:** This feature is under review and could change in future._
 
 ### SSL handled by an external service
 
@@ -320,7 +320,7 @@ Versions of this project fit with OJS tag versions, BUT...
 if you take a look to PKP's repositories, you will notice the tag naming
 syntax changed at version 3.1.2-0. We moved from "ojs-3_1_2-0" to "3_1_2-0".
 
-So, to avoid keeping in mind at what momment we changed the syntax, in this
+So, to avoid keeping in mind at what moment we changed the syntax, in this
 project we only use the modern syntax, so you cant/must refer every version
 with the same notation.
 
