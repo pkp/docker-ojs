@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.4.32-fpm
 
 LABEL maintainer="Public Knowledge Project <marc.bria@gmail.com>"
 WORKDIR /var/www/html
