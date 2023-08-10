@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.16.7
 
 LABEL maintainer="Public Knowledge Project <marc.bria@gmail.com>"
 WORKDIR /var/www/html
