@@ -25,10 +25,11 @@ Be sure you properly installed `docker` and `docker-compose` and the `docker` se
 git clone https://github.com/pkp/docker-ojs.git
 mv docker-ojs journalName && cd journalName
 mv .env.TEMPLATE .env
-# Change the environment variables to fit your needs (ojs version, ports, container name, url...)
-vim .env 
+vim .env                         					# Set environment variables as you wish (ojs version, ports, url...)
 source .env && wget "https://github.com/pkp/ojs/raw/${OJS_VERSION}/config.TEMPLATE.inc.php" -O ./volumes/config/ojs.config.inc.php
+sudo chown 100:101 ./volumes -R && chown 999:999 ./volumes/db -R	# Ensure folders got the propper permissions
 docker compose up -d
+# Visit your new site and complete the installation as usual (Read about DB access credentials below, in step 5).
 
 ```
 
