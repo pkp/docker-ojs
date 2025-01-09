@@ -96,7 +96,7 @@ you will be able to start a full OJS stack (web app + database containers) in 4 
     - **Database driver**: `mysqli` (or "mysql" if your php is lower than 7.3)
     - **Host**: `db` (which is the name of the container in the internal Docker network)
     - **Username**: `ojs`
-    - **Password**: `ojs` (change with the password you set in your environment variables)
+    - **Password**: `setYourPass` (change with the password you set in your environment variables)
     - **Database name**: `ojs`
     - _Uncheck_ "Create new database"
     - _Uncheck_ "Beacon"
@@ -150,19 +150,19 @@ All version tags can be found at [Docker Hub Tags tab](https://hub.docker.com/r/
 
 The image understand the following environment variables:
 
-| NAME                   | Default   | Info                 |
-|:----------------------:|:---------:|:---------------------|
-| SERVERNAME             | localhost | Used to generate httpd.conf and certificate            |
-| OJS_IMAGE              | ojs       | PKP tool to be used (ojs, omp, ops). Only OJS images avaliable right now |
-| OJS_VERSION            | 3_3_0-14  | OJS version to be deployed |
-| COMPOSER_PROJECT_NAME  | journal   | 
-| OJS_CLI_INSTALL | 0         | Used to install ojs automatically when start container |
-| OJS_DB_HOST     | db        | Database host        |
-| OJS_DB_USER     | ojs       | Database             |
-| OJS_DB_PASSWORD | ojsPwd    | Database password    |
-| OJS_DB_NAME     | ojs       | Database name        |
-| HTTP_PORT       | 8081      | Http port            |
-| HTTPS_PORT      | 8481      | Https port           |
+| NAME                   | Default      | Info                 |
+|:----------------------:|:------------:|:---------------------|
+| SERVERNAME             | localhost    | Used to generate httpd.conf and certificate            |
+| OJS_IMAGE              | ojs          | PKP tool to be used (ojs, omp, ops). Only OJS images avaliable right now |
+| OJS_VERSION            | 3_3_0-20     | OJS version to be deployed |
+| COMPOSER_PROJECT_NAME  | journal      | 
+| OJS_CLI_INSTALL        | 0            | Used to install ojs automatically when container starts |
+| OJS_DB_HOST            | db           | Database host        |
+| OJS_DB_USER            | ojs          | Database             |
+| OJS_DB_PASSWORD        | setYourPass  | Database password    |
+| OJS_DB_NAME            | ojs          | Database name        |
+| HTTP_PORT              | 8081         | Http port            |
+| HTTPS_PORT             | 8481         | Https port           |
 
 
 _**Note:** OJS_CLI_INSTALL and certificate features are under construction._
@@ -181,6 +181,8 @@ your docker-compose.yml** and fill the folders properly.
 When you run the `docker-compose` it will mount the volumes with persistent
 data and will let you share files from your host with the container.
 
+This is the usual volumes you will probably like to map:
+
 
 | Host                                    | Container  | Volume                                | Description                    |
 |:----------------------------------------|:----------:|:--------------------------------------|:-------------------------------|
@@ -194,6 +196,7 @@ data and will let you share files from your host with the container.
 | ./volumes/logs/db                       | db         | /var/log/mysql                        | mariaDB Logs                   |
 | ./volumes/db                            | db         | /var/lib/mysql                        | mariaDB database content       |
 | ./volumes/migration                     | db         | /docker-entrypoint-initdb.d           | DB init folder (with SQLs)     |
+| ./volumes/plugins                       | ojs        | /var/www/html/plugins                 | Ensure host plugins are sync with the ojs version |
 | /etc/localtime                          | ojs        | /etc/localtime                        | Sync clock with the host one.  |
 | TBD                                     | ojs        | /etc/ssl/apache2/server.pem           | SSL **crt** certificate        |
 | TBD                                     | ojs        | /etc/ssl/apache2/server.key           | SSL **key** certificate        |
@@ -209,7 +212,7 @@ And remember this is just an image, so feel free to modify to fit your needs.
 
 You can add your own volumes. For instance, make sense for a plugin developer
 or a themer to create a volume with his/her work, to keep a persistent copy in
-the host of the new plugin or theme.
+the host of the new plugin or theme (see plugins mapping in former table).
 
 An alternative way of working for developers is working with his/her own local
 Dockerfile that will be build to pull the plugin for his/her own repository...
@@ -221,13 +224,13 @@ before you run your `docker compose` command or it will fail.
 To be sure your volumes have the right permissions, you can run those commands:
 
    ```bash
-   $ chown 100:101 ./volumes -R
-   $ chown 999:999 ./volumes/db -R
-   $ chown 999:999 ./volumes/logs/db -R
+   $ sudo chown 100:101 ./volumes -R
+   $ sudo chown 999:999 ./volumes/db -R
+   $ sudo chown 999:999 ./volumes/logs/db -R
    ```
 
-In other words... all the content inside volumes will be owned by apache2 user
-and group (uid 100 and gid 101 inside the container), execpt for db and logs/db
+So, permissions for volumes folders are... all the content will be owned by apache2 
+user and group (uid 100 and gid 101 inside the container), execpt for db and logs/db
 folders that will be owned by mysql user and group (uid and gid 999).
 
 
@@ -238,13 +241,13 @@ The Dockerfile includes some scritps at "/usr/local/bin" to facilitate common op
 | Script               | Container  | Description                                                                                                   |
 |:---------------------|:----------:|:--------------------------------------------------------------------------------------------------------------|
 | ojs-run-scheduled    | ojs        | Runs "php tools/runScheduledTasks.php". Called by cron every hour.                                            |
-| ojs-cli-install      | ojs        | Uses curl to call the ojs install using pre-defined variables.                                                |
+| ojs-cli-install      | ojs        | Uses curl to call the ojs install using pre-defined variables (beta).                                         |
 | ojs-pre-start        | ojs        | Enforces some config variables and generates a self-signed cert based on ServerName.                          |
-| ojs-upgrade          | ojs        | Runs "php tools/upgrade.php upgrade". (issue when config.inc.php is a volume)                                 |
+| ojs-upgrade          | ojs        | Runs "php tools/upgrade.php upgrade". (beta: issue when config.inc.php is a volume)                           |
 | ojs-variable         | ojs        | Replaces the variable value in config.inc.php (ie: ojs-variable variable newValue)                            |
 | ojs-migrate          | ojs        | Takes a dump.sql, public and private files from "migration" folder and builds and builds a docker site (beta) |
 
-Some of those scripts are still beta, you be careful when you use them.
+Most of those scripts are still beta, you be careful when you use them.
 
 You can call the scripts outside the container as follows:
 
