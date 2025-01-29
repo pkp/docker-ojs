@@ -11,8 +11,8 @@ Open Journal Systems (OJS) is a journal management and publishing system that ha
 
 The images in this repository are built on top of [Alpine Linux](https://alpinelinux.org/) and come in several variants (see [Versions](#versions)).
 
-This project is maintained by [Marc Bria](https://github.com/marcbria).
 This repository is a fork of the work formerly done by [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) and [Marc Bria](https://github.com/marcbria/docker-ojs)
+This new project is maintained by [Marc Bria](https://github.com/marcbria).
 
 
 ## How to use
@@ -430,9 +430,9 @@ One thing you always will need to deal with is plugins. This is now possible but
 The project is build based on the needs of the participants. If you like to join, contact marc.bria@uab.cat.
 There is no formal roadmap, but we like to implement all the suggestion we made in the [Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm) document.
 Priorities right now are (by order):
-1. Fixing Mac image issues.
-2. Automatize docker images building and pushing to different repositories.
-3. Create new images based on "[Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm)" proposal.
+1. Create new images based on "[Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm)" proposal.
+2. Fixing Mac image issues.
+3. Automatize docker images building and pushing to different repositories.
 
 ## License
 
