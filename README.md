@@ -440,7 +440,8 @@ Priorities right now are (by order):
 
 #### **When I try to install I got an error...**
 > Errors occurred during installation A database error has occurred: SQLSTATE[HY000] [2002] No such file or directory (SQL: create table announcement_types (type_id bigint not null auto_increment primary key, assoc_type smallint not null, assoc_id bigint not null) default character set utf8 collate 'utf8_general_ci')
-Notice that, when you run the docker-compose.yml, you will be creating different containers with different names.
+
+When you run the docker-compose.yml, you will be creating different containers with different names.
 In this project, the database container will be named as "db" so you can refer it in the "app" container to reach the DB.
 So, nevermind if you use the web installer, or you set it manually in the config.inc.php, or you ask the Dockerimage to do it in your behalf... in all cases, you need to be sure you to set "db" when you are asked about the hostname of the database.
 
