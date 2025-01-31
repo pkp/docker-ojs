@@ -433,6 +433,10 @@ Priorities right now are (by order):
 1. Create new images based on "[Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm)" proposal.
 2. Fixing Mac image issues.
 3. Automatize docker images building and pushing to different repositories.
+#### **Installation error?**
+>Errors occurred during installation A database error has occurred: SQLSTATE[HY000] [2002] No such file or directory (SQL: create table announcement_types (type_id bigint not null auto_increment primary key, assoc_type smallint not null, assoc_id bigint not null) default character set utf8 collate 'utf8_general_ci')
+
+Make sure to put same config in the installation form as in .env file, (usually host = db)
 
 ## License
 
