@@ -418,14 +418,18 @@ you know docker and nginx so... ¿how could you contribute?
 
 #### **I have trouble with Mac**
 In general with docker, there are some known issues with the new Mac’s ARM architecture : https://stackoverflow.com/questions/73294020/docker-couldnt-create-the-mpm-accept-mutex . Alternative solution (other than hardcoding mutex settings) might be to build docker image also for arm64 platform (https://github.com/bitnami/containers/issues/4679). Some work was started in this line in gitLab building pipelines with promising preliminary results.
+
 #### **I have trouble with Windows**
 Instructions to run are for linux (as fas as linux is the natural platform for docker and servers) but is also possible to run it in windows. The wget instructions use variables defined in the env-file but this is not compatible with windows powershell, so would be nice to find an alternative that works all platforms. As a temporary solution we add clear instructions for windows users, that need to modify the inliner to get the right version of the config.TEMPLATE file.
+
 #### **May I get an image based on nginx?**
 A nice addition for docker images would be offer nginx image to replace the existing apache2.
+
 #### **How could I deal with plugins?**
 One thing you always will need to deal with is plugins. This is now possible but could be improved with a few ideas that appear during the sprint as: 
 - Use volumes managed with git
 - Create new ojs-plugins script helper that backups and download the essential release plugins for your version. 
+
 #### **Is there any roadmap?**
 The project is build based on the needs of the participants. If you like to join, contact marc.bria@uab.cat.
 There is no formal roadmap, but we like to implement all the suggestion we made in the [Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm) document.
@@ -433,10 +437,12 @@ Priorities right now are (by order):
 1. Create new images based on "[Containers for PKP](https://docs.google.com/document/d/1AoGn1K4ep4vf7ylIS7wU2ybCLHdJNpkDRND7OhfRG-I/edit#heading=h.tpkz1jmp2yzm)" proposal.
 2. Fixing Mac image issues.
 3. Automatize docker images building and pushing to different repositories.
-#### **Installation error?**
->Errors occurred during installation A database error has occurred: SQLSTATE[HY000] [2002] No such file or directory (SQL: create table announcement_types (type_id bigint not null auto_increment primary key, assoc_type smallint not null, assoc_id bigint not null) default character set utf8 collate 'utf8_general_ci')
 
-Make sure to put same config in the installation form as in .env file, (usually host = db)
+#### **When I try to install I got an error...**
+> Errors occurred during installation A database error has occurred: SQLSTATE[HY000] [2002] No such file or directory (SQL: create table announcement_types (type_id bigint not null auto_increment primary key, assoc_type smallint not null, assoc_id bigint not null) default character set utf8 collate 'utf8_general_ci')
+Notice that, when you run the docker-compose.yml, you will be creating different containers with different names.
+In this project, the database container will be named as "db" so you can refer it in the "app" container to reach the DB.
+So, nevermind if you use the web installer, or you set it manually in the config.inc.php, or you ask the Dockerimage to do it in your behalf... in all cases, you need to be sure you to set "db" when you are asked about the hostname of the database.
 
 ## License
 
