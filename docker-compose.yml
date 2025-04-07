@@ -1,18 +1,10 @@
-# File: docker-compose.yml
-# Access via "http://localhost:8081"
-#
-# Call example:
-# $ docker-compose up
-
-version: "3.6"
-
 networks:
   inside:
     external: false
 
 services:
   db:
-    image: mariadb:10.2
+    image: mariadb:lts-ubi
 #    env_file:
 #      - .env
     container_name: "ojs_db_${COMPOSE_PROJECT_NAME:-demo}"
@@ -28,7 +20,7 @@ services:
 #      - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
     networks:
       - inside
-    restart: always
+    restart: unless-stopped
 
   ojs:
     image: "pkpofficial/${OJS_IMAGE:-ojs}:${OJS_VERSION:-latest}"
@@ -53,4 +45,4 @@ services:
       - inside
     depends_on:
       - db
-    restart: always
+    restart: unless-stopped
