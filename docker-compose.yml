@@ -15,7 +15,7 @@ services:
       MYSQL_PASSWORD: "${OJS_DB_PASSWORD:-ojsPwd}"
     volumes:
       - ./volumes/db:/var/lib/mysql
-      - ./volumes/dump:/docker-entrypoint-initdb.d
+      - ./volumes/db-import:/docker-entrypoint-initdb.d
 #      - ./volumes/logs/db:/var/log/mysql
 #      - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
     networks:
