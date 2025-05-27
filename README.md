@@ -11,7 +11,8 @@ Open Journal Systems (OJS) is a journal management and publishing system that ha
 
 The images in this repository are built on top of [Alpine Linux](https://alpinelinux.org/) and come in several variants (see [Versions](#versions)).
 
-This repository is a fork of the work formerly done by [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) and [Marc Bria](https://github.com/marcbria/docker-ojs)
+This repository is a fork of the work formerly done by [Lucas Dietrich](https://github.com/lucasdiedrich/ojs) and [Marc Bria](https://github.com/marcbria/docker-ojs).
+
 This new project is maintained by [Marc Bria](https://github.com/marcbria).
 
 
@@ -72,7 +73,7 @@ you will be able to start a full OJS stack (web app + database containers) in 4 
     If your are running docker on windows (with Powershell), specify the version you like to download:
 
    ```bash
-    $ wget "https://github.com/pkp/ojs/raw/3_3_0-14/config.TEMPLATE.inc.php" -O ./volumes/config/ojs.config.inc.php
+    $ wget "https://github.com/pkp/ojs/raw/3_3_0-21/config.TEMPLATE.inc.php" -O ./volumes/config/ojs.config.inc.php
     ```
 
 4. Run the stack:
@@ -154,7 +155,7 @@ The image understand the following environment variables:
 |:----------------------:|:------------:|:---------------------|
 | SERVERNAME             | localhost    | Used to generate httpd.conf and certificate            |
 | OJS_IMAGE              | ojs          | PKP tool to be used (ojs, omp, ops). Only OJS images avaliable right now |
-| OJS_VERSION            | 3_3_0-20     | OJS version to be deployed |
+| OJS_VERSION            | 3_3_0-21     | OJS version to be deployed |
 | COMPOSER_PROJECT_NAME  | journal      | 
 | OJS_CLI_INSTALL        | 0            | Used to install ojs automatically when container starts |
 | OJS_DB_HOST            | db           | Database host        |
@@ -195,7 +196,7 @@ This is the usual volumes you will probably like to map:
 | ./volumes/logs/app                      | ojs        | /var/log/apache2                      | Apache2 Logs                   |
 | ./volumes/logs/db                       | db         | /var/log/mysql                        | mariaDB Logs                   |
 | ./volumes/db                            | db         | /var/lib/mysql                        | mariaDB database content       |
-| ./volumes/migration                     | db         | /docker-entrypoint-initdb.d           | DB init folder (with SQLs)     |
+| ./volumes/db-import                     | db         | /docker-entrypoint-initdb.d           | DB init folder (with SQLs)     |
 | ./volumes/plugins                       | ojs        | /var/www/html/plugins                 | Ensure host plugins are sync with the ojs version |
 | /etc/localtime                          | ojs        | /etc/localtime                        | Sync clock with the host one.  |
 | TBD                                     | ojs        | /etc/ssl/apache2/server.pem           | SSL **crt** certificate        |
@@ -233,6 +234,9 @@ So, permissions for volumes folders are... all the content will be owned by apac
 user and group (uid 100 and gid 101 inside the container), execpt for db and logs/db
 folders that will be owned by mysql user and group (uid and gid 999).
 
+    | **TIP:**             |
+    |:---------------------|
+    | The mysql/mariadb images include a nice entrypoint that let you run the scripts and sql dumps *if your DB is not yet created*. This feature is great for sites migrations, testing, demos, development dummy data, etc. You only need to include you mysqldump file in your `volumes/db-import` folder, map this folder as volume in your docker-compose.yml and start your container to enjoy the magic. |
 
 ## Built in scripts
 
