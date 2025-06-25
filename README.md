@@ -1,4 +1,4 @@
-> ⚠️ **This repository has archived**
+<!-- > ⚠️ **This repository has been archived**
 > 
 > All efforts to provide Docker images for PKP tools, along with specialized Docker Compose setups (production, development, etc.), have been consolidated in a new repository:  
 > 👉 [pkp/docker-ojs](https://github.com/pkp/docker-ojs)  
@@ -9,7 +9,7 @@
 > **easyOJS** instructions are still valid and will be moved soon to the new respository.
 
 # easyOJS - OJS in a docker
-
+-->
 
 | **IMPORTANT:** |
 |:---------------------------------------------------------|
