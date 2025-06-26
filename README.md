@@ -6,7 +6,7 @@
 > If you have any questions or suggestions, please use the issue tracker in the new repository:  
 > https://github.com/pkp/containers/issues
 >
-> **easyOJS** instructions are still valid and will be also moved to the new respository.
+> An updated replica of **easyOJS** documentation could be find [at the new repository](https://github.com/pkp/containers/blob/main/docs/easyOJS.md).
 
 # easyOJS - OJS in a docker
 
